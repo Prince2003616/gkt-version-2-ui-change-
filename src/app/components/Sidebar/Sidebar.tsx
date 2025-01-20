@@ -54,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilter, courses, onSearch }) => {
     const newFilters = { ...filters, [type]: value };
     
     if (type === 'partner') {
-      newFilters.technology = null;
+      newFilters.technology = null; // Reset technology when partner changes
     }
     
     setFilters(newFilters);
@@ -74,8 +74,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilter, courses, onSearch }) => {
 
   return (
     <div className="w-full" role="search" aria-label="Course filters">
-      <div className="bg-dark-300/80 backdrop-blur-sm rounded-2xl transition-all duration-300">
-        <div className="flex gap-2 p-4">
+      <div className="bg-dark-300/80 backdrop-blur-sm rounded-2xl transition-all duration-300 p-4">
+        <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <label htmlFor="course-search" className="sr-only">Search courses</label>
             <input
@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilter, courses, onSearch }) => {
               placeholder="Search..."
               value={filters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-dark-400/50 backdrop-blur-sm border border-primary-400/10 text-white placeholder-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/25 transition-all"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-dark-400/50 border border-primary-400/10 text-white placeholder-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-400/25 transition-all"
               aria-label="Search courses"
             />
             <svg
@@ -103,37 +103,33 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilter, courses, onSearch }) => {
             </svg>
           </div>
 
-          {/* Partner Dropdown */}
-          <div className="relative">
-            <select
-              value={filters.partner || ''}
-              onChange={(e) => handleFilterChange('partner', e.target.value ? Number(e.target.value) : null)}
-              className="rounded-xl bg-dark-400/50 border border-primary-400/10 text-white w-full py-3 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-400 hover:bg-primary-400/10"
-            >
-              <option value="" className="bg-dark-400 text-gray-300">Partner ({partners.length})</option>
-              {partners.map((partner) => (
-                <option key={partner.id} value={partner.id} className="bg-dark-400 text-white hover:bg-primary-400/10">
-                  {partner.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Dropdown for Partners */}
+          <select
+            value={filters.partner || ''}
+            onChange={(e) => handleFilterChange('partner', e.target.value ? Number(e.target.value) : null)}
+            className="rounded-xl bg-dark-400/50 border border-primary-400/10 text-white w-48 py-3 focus:outline-none focus:ring-2 focus:ring-primary-400"
+          >
+            <option value="" className="bg-dark-400 text-gray-300">Select Partner</option>
+            {partners.map((partner) => (
+              <option key={partner.id} value={partner.id} className="bg-dark-400 text-white hover:bg-primary-400/10">
+                {partner.name}
+              </option>
+            ))}
+          </select>
 
-          {/* Technology Dropdown */}
-          <div className="relative">
-            <select
-              value={filters.technology || ''}
-              onChange={(e) => handleFilterChange('technology', e.target.value || null)}
-              className="rounded-xl bg-dark-400/50 border border-primary-400/10 text-white w-full py-3 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-400 hover:bg-primary-400/10"
-            >
-              <option value="" className="bg-dark-400 text-gray-300">Technology ({technologies.length})</option>
-              {technologies.map((technology) => (
-                <option key={technology} value={technology} className="bg-dark-400 text-white hover:bg-primary-400/10">
-                  {technology}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Dropdown for Technologies */}
+          <select
+            value={filters.technology || ''}
+            onChange={(e) => handleFilterChange('technology', e.target.value || null)}
+            className="rounded-xl bg-dark-400/50 border border-primary-400/10 text-white w-48 py-3 focus:outline-none focus:ring-2 focus:ring-primary-400"
+          >
+            <option value="" className="bg-dark-400 text-gray-300">Select Technology</option>
+            {technologies.map((technology) => (
+              <option key={technology} value={technology} className="bg-dark-400 text-white hover:bg-primary-400/10">
+                {technology}
+              </option>
+            ))}
+          </select>
 
           {/* Reset Button */}
           <Button onClick={resetFilters} aria-label="Reset all filters">

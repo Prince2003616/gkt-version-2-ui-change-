@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Poppins:wght@400;600&family=Rubik:wght@400;500&display=swap');
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent: #1e90ff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,5 +20,14 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', 'Rubik', 'Lora', sans-serif;
+}
+
+button {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+button:hover {
+  background-color: lighten(var(--accent), 10%);
 }
